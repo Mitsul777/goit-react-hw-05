@@ -1,8 +1,12 @@
 .details {
-
+display: flex;
+    margin-top: 52px;
+}
+.img {
+    width: 240px ;
 }
 .info {
-
+padding: 0 24px;
 }
 .vote_average {
 

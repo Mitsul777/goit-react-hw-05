@@ -1,0 +1,4 @@
+.listItem {  background-color: blanchedalmond;
+
+    border: 1px solid rgb(74, 74, 74);
+    border-radius: 2px; transition: transform 0.3s ease;}

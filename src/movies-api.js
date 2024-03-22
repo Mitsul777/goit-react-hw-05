@@ -30,6 +30,14 @@ export const getMovieById = async (movieId) => {
         console.error(e);
     }
 };
+export const getMovieCast = async (movieId) => {
+    try {
+        const response = await axios.get(`/movie/${movieId}/cast`, options);
+        return response.data;
+    } catch (e) {
+        console.error(e);
+    }
+};
 
 export const getMovieReviews = async (movieId) => {
     try {
@@ -39,4 +47,13 @@ export const getMovieReviews = async (movieId) => {
         console.error(e);
     }
 };
+export const getImgPath = async () => {
+    try {
+        const response = await axios.get("/configuration", options);
+        return response.data;
+    } catch (e) {
+        console.error(e);
+    }
+};
+
 
