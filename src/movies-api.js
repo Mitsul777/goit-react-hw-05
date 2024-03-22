@@ -31,3 +31,12 @@ export const getMovieById = async (movieId) => {
     }
 };
 
+export const getMovieReviews = async (movieId) => {
+    try {
+        const response = await axios.get(`/movie/${movieId}/reviews`, options);
+        return response.data.results;
+    } catch (e) {
+        console.error(e);
+    }
+};
+
