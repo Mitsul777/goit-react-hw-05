@@ -1,12 +1,13 @@
 .nav {
     position: fixed;
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 20px #000000;
     width: 100%;
-    box-shadow: 0 0 20px #000;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
 }
 .link {
     color: #fefbe880;
