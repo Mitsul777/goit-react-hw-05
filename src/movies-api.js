@@ -32,13 +32,12 @@ export const getMovieById = async (movieId) => {
 };
 export const getMovieCast = async (movieId) => {
     try {
-        const response = await axios.get(`/movie/${movieId}/cast`, options);
+        const response = await axios.get(`/movie/${movieId}/credits`, options);
         return response.data;
     } catch (e) {
         console.error(e);
     }
 };
-
 export const getMovieReviews = async (movieId) => {
     try {
         const response = await axios.get(`/movie/${movieId}/reviews`, options);
@@ -57,3 +56,11 @@ export const getImgPath = async () => {
 };
 
 
+export const getMoviesByQuery = async (query) => {
+    try {
+        const response = await axios.get(`/search/movie?query=${query}`, options);
+        return response.data.results;
+    } catch (e) {
+        console.error(e);
+    }
+};

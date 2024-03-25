@@ -1,44 +1,42 @@
+import { useSearchParams } from "react-router-dom";
+import { getMoviesByQuery } from "../../movies-api";
 import { useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { FaSearch } from 'react-icons/fa';
+import MovieList from "../../components/MoviesList/MovieList.jsx";
 import css from "./MoviesPage.module.css";
-import toast, { Toaster } from 'react-hot-toast';
-// import { searchMovies } from "../../movies-api.js";
-import {useSearchParams} from "react-router-dom";
 
-const MoviesPage = () => {
-    const [searchResults, setSearchResults] = useState([]);
-    const [params, setParams] = useSearchParams()
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+export default function MoviesPage() {
+    const [params, setParams] = useSearchParams();
+    const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
     const query = params.get("query") ?? "";
 
     const submitHandler = (e) => {
-        e.preventDefault()
-        setParams({query: e.target.elements.query.value});
-        e.target.reset()
-    }
+        e.preventDefault();
+        setParams({ query: e.target.elements.query.value });
+        e.target.reset();
+    };
 
     useEffect(() => {
-        async function getData(query) {
+        async function getData() {
             try {
-                setIsLoading(true);
-                const data = await searchMovies(query);
-                setSearchResults(data);
+                setLoading(true);
+                const data = await getMoviesByQuery(query);
+                setMovies(data);
             } catch (e) {
                 setError(true);
             } finally {
-                setIsLoading(false);
+                setLoading(false);
             }
         }
         if (query) {
-            getData()
+            getData();
         }
     }, [query]);
 
     return (
-        <div>
-            <form onSubmit={submitHandler}>
+        <>
+            <form onSubmit={submitHandler} className={css.form}>
                 <input
                     className={css.input}
                     type="text"
@@ -50,23 +48,18 @@ const MoviesPage = () => {
                 <button className={css.btn}>Search</button>
             </form>
 
-            {isLoading && <div>Loading...</div>}
-            {error && <div>Error: {error.message}</div>}
+            {loading && <p>Loading...</p>}
+            {error && (
+                <p>
+                    Oops! There's been some kind of mistake. Just try to reload the page
+                </p>
+            )}
 
-            {!isLoading && searchResults.length === 0 && <div>No results found</div>}
-
-            <ul className={css.movieList}>
-                {searchResults.map(movie => (
-                    <li key={movie.id}>
-                        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-                        <h3>{movie.title}</h3>
-                    </li>
-                ))}
-            </ul>
-        </div>
+            {movies.length > 0 ? (
+                <MovieList movies={movies} />
+            ) : (
+                <p>No movies found for your search :(</p>
+            )}
+        </>
     );
 }
-
-export default MoviesPage;
-
-

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {getMovieCast} from "../../movies-api.js";
 export default function MovieCast() {
     const { movieId } = useParams();
-    const [cast, setCast] = useState([]);
+    const [casts, setCast] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -29,18 +29,18 @@ export default function MovieCast() {
             {error && (
                 <p>Oops! There has been some kind of mistake. Just try to reload the page.</p>
             )}
-            {cast && (
-                <ul>
-                    {cast.map((actor) => {
+            {casts && (
+                <ul className={css.ul}>
+                    {casts.cast.map((cast) => {
                         return (
-                            <li key={actor.cast_id}>
+                            <li key={cast.cast_id} className={css.li}>
                                 <img
-                                    src={`https://image.tmdb.org/t/p/w500/${actor.profile_path}`}
-                                    alt={actor.original_name}
-                                    key={actor.cast_id}
+                                    src={`https://image.tmdb.org/t/p/w500/${cast.profile_path}`}
+                                    alt=""
+                                    key={cast.id}
                                 />
-                                <p>Original name: {actor.original_name}</p>
-                                <p>Character: {actor.character}</p>
+                                <p>Original name: {cast.original_name}</p>
+                                <p>Character: {cast.character}</p>
                             </li>
                         );
                     })}

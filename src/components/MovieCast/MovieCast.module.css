@@ -1,0 +1,9 @@
+.li {
+    width: 300px;
+}
+.ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}

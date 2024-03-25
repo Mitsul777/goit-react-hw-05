@@ -1,8 +1,11 @@
 import {NavLink, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getImgPath, getMovieById} from "../../movies-api.js";
 import css from './MovieDetailsPage.module.css'
 import { Outlet } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+
+// Далее используйте useLocation в вашем компоненте
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams();
@@ -10,6 +13,9 @@ const MovieDetailsPage = () => {
     const [loading, setLoading] = useState(false);
     const [img, setImg] = useState("");
     const [error, setError] = useState(false);
+    const location = useLocation();
+    const backLinkRef = useRef(location.state)
+
 
 
 
@@ -41,8 +47,9 @@ const MovieDetailsPage = () => {
 
     return (
         <div>
-            Go Back
             <div>
+                <NavLink className={css.goBack} to={backLinkRef.current}>Go Back
+                </NavLink>
                 <div className={css.details}>
                     <div className={css.img}>
                         <img src={img} alt="movie poster" className={css.img} />
@@ -55,18 +62,21 @@ const MovieDetailsPage = () => {
                                 <h3>Overview</h3>
                                 <p>{movie.overview}</p>
                                 <h3>Genres</h3>
+                                {movie.genres.map((gen) => {
+                                    return <p key={gen.id}>{gen.name}</p>;
+                                })}
                             </>
                         )}
                     </div>
                 </div>
-                <ul>
+                <ul className={css.ul}>
                     <li>
-                        <NavLink to="cast">
+                        <NavLink to="cast" className={css.cast}>
                             Cast
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="reviews">
+                        <NavLink to="reviews" className={css.reviews} >
                             Reviews
                         </NavLink>
                     </li>

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import { getTrendingMovies } from "../../movies-api.js";
 import css from "./HomePage.module.css";
-import {Link} from "react-router-dom";
+import MovieList from "../../components/MoviesList/MovieList.jsx";
+
 
 const HomePage = () => {
     const [movies, setMovies] = useState([]);
@@ -29,21 +30,10 @@ const HomePage = () => {
     return (
 
         <div>
-            <h2 className={css.h2}>Trending today</h2>
+            <h2 className={css.h2}></h2>
             {isLoading && <b>Loading...</b>}
             {error && <b>Error!!!</b>}
-            <ul className={css.ulList}>
-                {movies.map(movie => (
-                    <li key={movie.id} className={css.li}>
-                        <Link to={`/movies/${movie.id}`}>
-                            {movie.poster_path && (
-                                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-                            )}
-                            <div className={css.h3}>{movie.title}</div>
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+            <MovieList movies={movies}/>
         </div>
     );
 }
