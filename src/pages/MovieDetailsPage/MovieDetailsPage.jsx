@@ -1,5 +1,5 @@
 import {NavLink, useParams} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
+import {Suspense, useEffect, useRef, useState} from "react";
 import {getImgPath, getMovieById} from "../../movies-api.js";
 import css from './MovieDetailsPage.module.css'
 import { Outlet } from 'react-router-dom';
@@ -81,7 +81,9 @@ const MovieDetailsPage = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <Outlet />
+                <Suspense fallback={<div>Loading sub components</div>}>
+                    <Outlet />
+                </Suspense>
             </div>
         </div>
     );
