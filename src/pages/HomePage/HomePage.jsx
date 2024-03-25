@@ -30,7 +30,7 @@ const HomePage = () => {
     return (
 
         <div>
-            <h2 className={css.h2}></h2>
+            <h2 className={css.h2}>Trending movies</h2>
             {isLoading && <b>Loading...</b>}
             {error && <b>Error!!!</b>}
             <MovieList movies={movies}/>
